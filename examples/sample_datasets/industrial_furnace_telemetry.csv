@@ -1,0 +1,14 @@
+timestamp,furnace_id,zone_temp_c,exhaust_pressure_mbar,operator_email,batch_code,maintenance_flag
+2026-10-01 08:00:00,FURNACE-01,845.2,1013.2,op1@ghifurnaces.com,BATCH-A100,0
+2026-10-01 08:15:00,FURNACE-01,846.1,1013.5,op1@ghifurnaces.com,BATCH-A100,0
+2026-10-01 08:30:00,FURNACE-01,847.8,1012.9,op1@ghifurnaces.com,BATCH-A100,0
+2026-10-01 08:45:00,FURNACE-01,1350.0,1013.0,op2@ghifurnaces.com,BATCH-A101,1
+2026-10-01 09:00:00,FURNACE-01,849.2,1013.1,op2@ghifurnaces.com,BATCH-A101,0
+2026-10-01 09:15:00,FURNACE-01,,1013.4,op2@ghifurnaces.com,BATCH-A101,0
+2026-10-01 09:30:00,FURNACE-01,850.5,1013.6,op2@ghifurnaces.com,BATCH-A101,0
+2026-10-01 09:30:00,FURNACE-01,850.5,1013.6,op2@ghifurnaces.com,BATCH-A101,0
+2026-10-01 10:00:00,FURNACE-02,780.0,1011.0,supervisor@factory.internal,BATCH-B200,0
+2026-10-01 10:15:00,FURNACE-02,782.3,1011.2,supervisor@factory.internal,BATCH-B200,0
+2026-10-01 10:30:00,FURNACE-02,781.9,1011.5,supervisor@factory.internal,BATCH-B200,0
+2026-10-01 10:45:00,FURNACE-02,783.1,1011.4,,BATCH-B200,0
+2026-10-01 11:00:00,FURNACE-02,782.5,1011.3,supervisor@factory.internal,BATCH-B200,0
