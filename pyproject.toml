@@ -61,3 +61,7 @@ data-governance-mcp = "data_governance_mcp.cli:main"
 Homepage = "https://github.com/ioseba/data-governance-mcp"
 Repository = "https://github.com/ioseba/data-governance-mcp"
 Issues = "https://github.com/ioseba/data-governance-mcp/issues"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
