@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+from pathlib import Path
 from typing import Any, Dict, Optional
 from mcp.server.fastmcp import FastMCP
 
@@ -10,11 +11,15 @@ from .core.loader import DatasetLoader
 from .core.dimensions import DataQualityEvaluator
 from .core.pii_detector import PIIDetector
 from .core.reporter import GovernanceReporter
+from .core.synthetic_twin import SyntheticTwinGenerator
+from .core.token_compressor import TokenCompressor
+from .core.dbt_exporter import DbtExporter
+from .core.dashboard import DashboardExporter
 
 # Initialize FastMCP Server
 mcp = FastMCP(
     name="Data Governance MCP",
-    instructions="Enterprise-grade DAMA-DMBOK data quality audit and PII compliance server for AI agents.",
+    instructions="Enterprise-grade DAMA-DMBOK data quality audit, synthetic privacy digital twin, and token optimization server for AI agents.",
 )
 
 
@@ -43,16 +48,110 @@ def audit_dataset(
 
 
 @mcp.tool()
-def profile_schema(file_path: str, max_rows: Optional[int] = 10000) -> str:
-    """Profiles the dataset schema, data types, null rates, and distribution summaries.
+def generate_synthetic_twin(
+    file_path: str,
+    output_csv_path: Optional[str] = None,
+    n_rows: Optional[int] = None,
+) -> str:
+    """Generates a 100% privacy-safe synthetic digital twin of a dataset, preserving schema and statistical distributions.
+
+    Enables safe vibe coding in Cursor/Claude without uploading proprietary or sensitive company records.
+
+    Args:
+        file_path: Path to real production dataset.
+        output_csv_path: Optional path to save the generated synthetic CSV file.
+        n_rows: Number of synthetic rows to generate (default: matches input dataset size).
+
+    Returns:
+        Summary of modeled columns, anonymized fields, and sample synthetic preview records.
+    """
+    try:
+        df, source_desc = DatasetLoader.load(file_path)
+        twin_df, meta = SyntheticTwinGenerator.generate(df, n_rows=n_rows)
+
+        if output_csv_path:
+            out_p = Path(output_csv_path)
+            out_p.parent.mkdir(parents=True, exist_ok=True)
+            twin_df.to_csv(out_p, index=False)
+            meta["saved_to"] = str(out_p.resolve())
+
+        preview = twin_df.head(3).to_dict(orient="records")
+        return json.dumps({"status": "SUCCESS", "metadata": meta, "sample_preview": preview}, indent=2, default=str)
+    except Exception as exc:
+        return json.dumps({"status": "ERROR", "error": str(exc)})
+
+
+@mcp.tool()
+def compress_context_for_llm(file_path: str, max_rows: Optional[int] = 10000) -> str:
+    """Compresses large tabular datasets by 90-95% into a dense statistical context fingerprint.
+
+    Dramatically reduces token consumption and eliminates LLM context window overflows in Cursor / Claude.
 
     Args:
         file_path: Path to dataset file.
-        max_rows: Maximum records to inspect.
+        max_rows: Maximum records to inspect for compression.
 
     Returns:
-        JSON string describing the tabular schema profile.
+        Ultra-dense JSON fingerprint with schema, distributions, collinearity, and token savings metrics.
     """
+    try:
+        df, source_desc = DatasetLoader.load(file_path, max_rows=max_rows)
+        res = TokenCompressor.compress(df, dataset_name=source_desc)
+        return json.dumps(res, indent=2, default=str)
+    except Exception as exc:
+        return json.dumps({"error": str(exc)})
+
+
+@mcp.tool()
+def export_dbt_tests(file_path: str, model_name: str = "stg_dataset") -> str:
+    """Automatically translates DAMA quality findings into production-ready dbt schema.yml tests.
+
+    Args:
+        file_path: Path to dataset file.
+        model_name: Target dbt model name.
+
+    Returns:
+        Ready-to-commit dbt schema.yml content with not_null, unique, and accepted_values tests.
+    """
+    try:
+        df, _ = DatasetLoader.load(file_path)
+        return DbtExporter.generate_dbt_schema_yml(df, model_name=model_name)
+    except Exception as exc:
+        return f"# Error generating dbt tests: {str(exc)}"
+
+
+@mcp.tool()
+def export_html_dashboard(
+    file_path: str,
+    output_html_path: str = "governance_dashboard.html",
+) -> str:
+    """Exports a self-contained, interactive executive HTML audit dashboard with zero external dependencies.
+
+    Args:
+        file_path: Path to dataset file.
+        output_html_path: Destination path for HTML file.
+
+    Returns:
+        Confirmation message with path to open in browser.
+    """
+    try:
+        df, source_desc = DatasetLoader.load(file_path)
+        evaluator = DataQualityEvaluator(df, source_name=source_desc)
+        scorecard = evaluator.evaluate_all()
+        pii = PIIDetector.scan(df)
+        html_content = DashboardExporter.generate_html(scorecard, pii)
+
+        out_p = Path(output_html_path)
+        out_p.parent.mkdir(parents=True, exist_ok=True)
+        out_p.write_text(html_content, encoding="utf-8")
+        return f"Successfully generated interactive dashboard: {out_p.resolve()}"
+    except Exception as exc:
+        return f"Error exporting HTML dashboard: {str(exc)}"
+
+
+@mcp.tool()
+def profile_schema(file_path: str, max_rows: Optional[int] = 10000) -> str:
+    """Profiles the dataset schema, data types, null rates, and distribution summaries."""
     try:
         df, source_desc = DatasetLoader.load(file_path, max_rows=max_rows)
         profile = {
@@ -77,15 +176,7 @@ def profile_schema(file_path: str, max_rows: Optional[int] = 10000) -> str:
 
 @mcp.tool()
 def detect_pii(file_path: str, max_sample_rows: Optional[int] = 500) -> str:
-    """Scans dataset for personally identifiable information (PII), secrets, and compliance liabilities.
-
-    Args:
-        file_path: Path to dataset file.
-        max_sample_rows: Number of sample records to inspect (default: 500).
-
-    Returns:
-        JSON string containing PII findings, risk levels, and leakage warnings.
-    """
+    """Scans dataset for personally identifiable information (PII), secrets, and compliance liabilities."""
     try:
         df, _ = DatasetLoader.load(file_path, max_rows=max_sample_rows)
         res = PIIDetector.scan(df, max_sample_rows=max_sample_rows or 500)
@@ -96,14 +187,7 @@ def detect_pii(file_path: str, max_sample_rows: Optional[int] = 500) -> str:
 
 @mcp.tool()
 def evaluate_dama_dimensions(file_path: str) -> str:
-    """Evaluates dataset against the 6 core DAMA dimensions: Completeness, Uniqueness, Validity, Accuracy, Consistency, Timeliness.
-
-    Args:
-        file_path: Path to dataset file.
-
-    Returns:
-        JSON string with granular scores and diagnostics per dimension.
-    """
+    """Evaluates dataset against the 6 core DAMA dimensions: Completeness, Uniqueness, Validity, Accuracy, Consistency, Timeliness."""
     try:
         df, source_desc = DatasetLoader.load(file_path)
         evaluator = DataQualityEvaluator(df, source_name=source_desc)
@@ -129,7 +213,7 @@ def suggest_remediations(file_path: str) -> str:
         scorecard = evaluator.evaluate_all()
         pii = PIIDetector.scan(df)
 
-        lines = [f"# 🛠️ Recommended Remediation Scripts for `{source_desc}`\n"]
+        lines = [f"# Recommended Remediation Scripts for `{source_desc}`\n"]
 
         # Duplicates
         dup_cnt = scorecard.dimension_scores["Uniqueness"].details.get("duplicate_rows", 0)
@@ -161,7 +245,7 @@ def suggest_remediations(file_path: str) -> str:
             lines.append("```\n")
 
         if len(lines) == 1:
-            lines.append("✅ Dataset is already high quality! No immediate critical remediation scripts required.")
+            lines.append("Dataset is already high quality! No immediate critical remediation scripts required.")
 
         return "\n".join(lines)
     except Exception as exc:
