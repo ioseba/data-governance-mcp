@@ -14,7 +14,7 @@ An industrial-grade Model Context Protocol (MCP) server engineered for developer
 ## System Architecture
 
 <div align="center">
-  <img src="assets/system_architecture.jpg" alt="Research Paper System Architecture Overview" width="100%" />
+  <img src="assets/system_architecture.png" alt="Data Governance and Privacy Twin MCP Architecture" width="100%" />
 </div>
 
 The architecture comprises four decoupled operational stages:
