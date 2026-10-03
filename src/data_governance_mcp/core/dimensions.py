@@ -29,10 +29,18 @@ class QualityScorecard:
     critical_issues: List[str]
     source_info: str
 
+    @property
+    def status_label(self) -> str:
+        if self.overall_score >= 90:
+            return "EXCELLENT"
+        elif self.overall_score >= 75:
+            return "ACCEPTABLE"
+        return "CRITICAL"
+
     def to_dict(self) -> Dict[str, Any]:
         return {
             "overall_score": round(self.overall_score, 2),
-            "health_status": "EXCELLENT" if self.overall_score >= 90 else ("ACCEPTABLE" if self.overall_score >= 70 else "CRITICAL"),
+            "health_status": self.status_label,
             "total_records": self.total_records,
             "total_columns": self.total_columns,
             "source": self.source_info,
@@ -52,6 +60,15 @@ class QualityScorecard:
 
 class DataQualityEvaluator:
     """Evaluates tabular datasets against the six DAMA Data Management Body of Knowledge dimensions."""
+
+    DEFAULT_WEIGHTS = {
+        "Completeness": 0.22,
+        "Uniqueness": 0.18,
+        "Validity": 0.22,
+        "Accuracy": 0.16,
+        "Consistency": 0.12,
+        "Timeliness": 0.10,
+    }
 
     def __init__(self, df: pd.DataFrame, source_name: str = "dataset"):
         self.df = df.copy()

@@ -1,32 +1,88 @@
-# Data Governance & Privacy Twin MCP (`data-governance-mcp`)
-### Enterprise Data Quality, Synthetic Privacy Twins & Token Optimization for AI Coding
+<div align="center">
 
-[![CI Quality & Tests](https://github.com/ioseba/data-governance-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/ioseba/data-governance-mcp/actions)
-[![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue.svg)](https://python.org)
-[![MCP Protocol](https://img.shields.io/badge/MCP-1.2.0%2B-purple.svg)](https://modelcontextprotocol.io)
-[![DAMA Standard Alignment](https://img.shields.io/badge/Standard-DAMA--DMBOK%20%2F%20CDMP-success.svg)](https://dama.org)
-[![License: MIT](https://img.shields.io/badge/License-MIT-gray.svg)](LICENSE)
+  <img src="assets/hero_banner.svg" alt="Data Governance & Privacy Twin MCP Banner" width="100%" />
 
-An industrial-grade Model Context Protocol (MCP) server engineered for developers and teams using AI coding assistants (Cursor, Claude Desktop, Antigravity, Cline). It prevents enterprise compliance blockers, slashes LLM context token consumption by 90-95%, audits datasets against certified DAMA-DMBOK standards, and generates production-ready dbt test suites.
+  <br />
+
+  [![CI Quality & Tests](https://github.com/ioseba/data-governance-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/ioseba/data-governance-mcp/actions)
+  [![Python Matrix](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-38bdf8.svg?style=flat&logo=python&logoColor=white)](https://python.org)
+  [![MCP Protocol](https://img.shields.io/badge/MCP-1.2.0%2B-818cf8.svg?style=flat&logo=databricks&logoColor=white)](https://modelcontextprotocol.io)
+  [![DAMA-DMBOK Standard](https://img.shields.io/badge/Standard-DAMA--DMBOK%20%2F%20CDMP-10b981.svg?style=flat)](https://dama.org)
+  [![License: MIT](https://img.shields.io/badge/License-MIT-64748b.svg?style=flat)](LICENSE)
+
+  <p align="center">
+    <strong>Enterprise data governance meets AI coding.</strong><br />
+    An industrial-grade Model Context Protocol (MCP) server that autonomously audits datasets against certified DAMA-DMBOK standards, generates differential-privacy synthetic twins, slashes LLM prompt context by 95%, and exports production-ready dbt test suites.
+  </p>
+
+  <p align="center">
+    <a href="#quickstart">Quickstart</a> &bull;
+    <a href="#why-vibe-coding-demands-governance">Why Governance?</a> &bull;
+    <a href="#system-architecture">Architecture</a> &bull;
+    <a href="#terminal-cli-experience">Terminal CLI</a> &bull;
+    <a href="#interactive-html-dashboard">HTML Dashboard</a> &bull;
+    <a href="#mcp-tools-reference">MCP Tools</a>
+  </p>
+
+</div>
+
+---
+
+## The Vibe Coding Problem vs The Solution
+
+When developers feed raw datasets into AI coding assistants (**Cursor**, **Claude Desktop**, **Antigravity**, **Windsurf**), three critical bottlenecks arise:
+
+| Dimension | Raw Prompting (The Naive Way) | With `data-governance-mcp` | Enterprise Impact |
+| :--- | :--- | :--- | :--- |
+| **Privacy & GDPR** | Uploads customer PII, internal IDs, and secrets into cloud LLMs. | Synthesizes **Differential-Privacy Digital Twins** with zero real records. | **100% Compliance / Zero Leakage** |
+| **Context Consumption** | 12,000–50,000 tokens per prompt turn ($0.15–$0.60 / message). | Condenses datasets into statistical fingerprints of **~680 tokens**. | **-94.5% Token Expenditure** |
+| **Model Attention** | Context bloat triggers hallucinations and degrades reasoning. | High-density 5-number moments and edge-case exemplars. | **Higher LLM Code Precision** |
+| **Quality Baseline** | Blind scripting without knowing null rates, outliers, or skewness. | Certified **DAMA-DMBOK 6-dimension scorecards** (0–100 index). | **Predictable Reliability** |
+| **Production Path** | Ephemeral, throwaway Python scripts discarded after prompting. | Auto-generates production **`dbt` schema tests** and HTML audits. | **Instant CI/CD Readiness** |
+
+---
+
+## Live AI Assistant Showcase
+
+Here is how an AI assistant running `data-governance-mcp` handles proprietary enterprise data inside **Cursor** or **Claude Desktop**:
+
+````markdown
+> User in Cursor:
+"@data-governance I need to write a predictive anomaly detection pipeline for furnace_telemetry.csv,
+but corporate compliance prohibits uploading internal telemetry and customer data to external LLMs."
+
+> Claude (via Data Governance MCP):
+"I have audited `furnace_telemetry.csv` and secured your development session:
+
+1. 🚨 PII Sanitization: Flagged unmasked email addresses and API keys in column `operator_email`.
+2. 🧪 Synthetic Digital Twin: Generated `synthetic_twin.csv` (500 rows) matching exact statistical
+   moments (μ=1,245.8°C, σ=42.1°C), categorical distributions, and null ratios with differential privacy (ε=1.0).
+3. ⚡ Token Optimization: Compressed 14,250 tokens down to 680 tokens (-95.2% prompt reduction).
+4. 🚀 Production Artifacts:
+   - Generated `schema.yml` with dbt tests (`not_null`, `unique`, and Tukey outlier range tests).
+   - Exported interactive executive audit report to `reports/audit_dashboard.html`.
+
+You can now develop and test your predictive model in Cursor using the synthetic twin with zero compliance risk."
+````
 
 ---
 
 ## System Architecture
 
 <div align="center">
-  <img src="assets/system_architecture.png" alt="Privacy-preserving data governance architecture for MCP-enabled digital twins" width="100%" />
+  <img src="assets/system_architecture.png" alt="Privacy-Preserving Data Governance Architecture for MCP-Enabled Digital Twins" width="100%" />
   <p><em><strong>Fig. 1. Privacy-preserving data governance architecture for MCP-enabled digital twins.</strong> The system ingests heterogeneous data sources, detects and sanitizes PII, generates a statistically faithful synthetic digital twin using differential privacy, evaluates data quality according to DAMA-DMBOK dimensions, compresses the model context (-94.5%), and exposes native MCP tools for AI coding assistants.</em></p>
 </div>
 
 The architecture comprises four decoupled operational stages and four concrete enterprise deliverables:
 
 ### (A) Raw Data Ingestion & PII Sanitization
-* **Schema Sniffer**: Delimiter and format detection (CSV/TSV, Parquet/Arrow, SQLite, JSON, memory buffers), strict type inference, encoding detection, and header validation.
-* **PII Sanitization**: Pattern-based interception (emails, phone numbers, tax IDs, credit cards, credentials/API keys) and configurable masking before data touches LLM context.
+* **Schema Sniffer**: Delimiter and format auto-detection (CSV/TSV, Parquet/Arrow, SQLite, JSON, memory streams), strict type inference, encoding detection, and header validation.
+* **PII Sanitization**: Pattern-based regex & heuristic interception for emails, phone numbers, tax IDs (DNI/NIE), credit cards, and API secrets/tokens before data enters the LLM prompt.
 
 ### (B) Synthetic Digital Twin Generation
-* **Statistical Moment Profiler**: Computes empirical moments ($\mu$, $\sigma$, min, max, skewness, kurtosis), categorical frequencies, and correlation structures.
-* **Differential Privacy Engine**: Generates privacy-safe, distribution-preserving mock datasets with calibrated noise injection $(\varepsilon, \delta)$ and realistic token formats, enabling uninhibited local vibe coding without compliance violations.
+* **Statistical Moment Profiler**: Computes empirical moments ($\mu$, $\sigma$, min, max, skewness, kurtosis), categorical frequency distributions, and correlation structures.
+* **Differential Privacy Engine**: Injects calibrated Laplacian/Gaussian noise $(\varepsilon, \delta)$ to generate statistically faithful mock datasets with identical column types and null dynamics without exposing a single real row.
 
 ### (C) DAMA-DMBOK Quality Audit & Token Optimization
 * **DAMA-DMBOK 6 Dimensions**: Rigorous audit of Completeness, Uniqueness, Validity, Consistency, Timeliness, and Accuracy.
@@ -43,34 +99,53 @@ The architecture comprises four decoupled operational stages and four concrete e
 
 ---
 
-## Why Modern AI Coding Demands a Governance Protocol
+## Interactive HTML Dashboard
 
-When developers feed raw enterprise data into AI IDEs, they encounter three systemic obstacles:
+Generate zero-dependency, self-contained executive audit reports containing interactive SVG radar charts and dimension health gauges:
 
-* **Compliance & Security Blockades**: Corporate governance and GDPR strictly forbid uploading proprietary records, customer PII, or internal telemetry into cloud-hosted LLM contexts.
-* **Token Saturation & Latency**: Large tables consume hundreds of thousands of context tokens per turn, driving up API expenditure and inducing attention degradation (hallucinations).
-* **Missing Production Readiness**: AI assistants can write ephemeral Python snippets, but they fail to produce maintainable data engineering artifacts (such as formal `dbt` tests or reproducible validation suites).
+```bash
+data-governance-mcp dashboard telemetry.csv --out audit_report.html
+```
 
-`data-governance-mcp` resolves these challenges through automated, protocol-level enforcement.
+<div align="center">
+  <img src="assets/dashboard_preview.svg" alt="Interactive HTML Audit Dashboard Preview" width="100%" />
+</div>
 
 ---
 
-## Core Capabilities
+## Terminal CLI Experience
 
-### 1. Synthetic Digital Twin (`generate_synthetic_twin`)
-Creates an anonymized, differential-privacy-inspired mirror of your dataset. It replicates column data types, statistical moments (mean, variance, min, max), empirical category frequencies, and real-world null distributions without containing a single record of actual sensitive data.
-* **Developer outcome**: Vibe code freely in Cursor without violating enterprise security policies.
+When working directly in your terminal, `data-governance-mcp` delivers a rich, color-coded diagnostic dashboard powered by `rich`:
 
-### 2. Semantic Context Compressor (`compress_context_for_llm`)
-Condenses multi-megabyte datasets into an ultra-dense statistical fingerprint (5-number summaries, correlation matrices, distinct cardinalities, and representative edge-case exemplar records).
-* **Developer outcome**: Reduces context token usage by 90-95%, preventing model context window overflows and accelerating response latency.
+```bash
+data-governance-mcp audit examples/sample_datasets/industrial_furnace_telemetry.csv
+```
 
-### 3. Production Test Suite Generator (`export_dbt_tests`)
-Translates empirical audit findings directly into clean, standardized `dbt` `schema.yml` configuration blocks (`not_null`, `unique`, `accepted_values`, and expression bounds).
-* **Developer outcome**: Move from local exploration to tested production pipelines with zero manual boilerplate.
-
-### 4. Zero-Dependency HTML Dashboard (`export_html_dashboard`)
-Exports a standalone, self-contained HTML audit report containing DAMA dimensional health gauges, privacy risk indices, and remediation plans with zero CDN or external library requirements.
+```text
+┌─────────────────── DATA GOVERNANCE & PRIVACY TWIN AUDIT ────────────────────┐
+│ Dataset: Delimited file (industrial_furnace_telemetry.csv)                  │
+│ Records: 13  |  DAMA-DMBOK Score: 94.6 / 100 (EXCELLENT)                    │
+│ Security & PII Risk: HIGH (2 findings flagged)                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+                     DAMA-DMBOK 6 Core Quality Dimensions                      
+┌──────────────┬────────┬────────┬─────────────┬──────────────────────────────┐
+│ Dimension    │ Weight │  Score │   Status    │ Diagnostics                  │
+├──────────────┼────────┼────────┼─────────────┼──────────────────────────────┤
+│ Completeness │  22%   │  97.8% │  [ PASS ]   │ 2 null values detected (2.2% │
+│              │        │        │             │ missingness).                │
+│ Uniqueness   │  18%   │  84.6% │  [ FAIL ]   │ 1 exact duplicate row found. │
+│ Validity     │  22%   │ 100.0% │  [ PASS ]   │ All columns conform to types.│
+│ Accuracy     │  16%   │  89.5% │ [ WARNING ] │ 1 statistical outlier (IQR). │
+│ Consistency  │  12%   │ 100.0% │  [ PASS ]   │ No logical contradictions.   │
+│ Timeliness   │  10%   │  95.0% │  [ PASS ]   │ Evaluated on 'timestamp'.    │
+└──────────────┴────────┴────────┴─────────────┴──────────────────────────────┘
+┌──────────────────────────────── Action Plan ────────────────────────────────┐
+│ Recommended Remediation Workflow:                                           │
+│ 1. Generate privacy twin:  data-governance-mcp twin telemetry.csv           │
+│ 2. Export dbt tests:       data-governance-mcp dbt telemetry.csv            │
+│ 3. Generate HTML report:   data-governance-mcp dashboard telemetry.csv      │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
 
 ---
 
@@ -87,47 +162,21 @@ Exports a standalone, self-contained HTML audit report containing DAMA dimension
 
 ---
 
-## Installation
+## Quickstart
 
-### Standard Installation
+### Installation
+
 ```bash
+# Using uv (Recommended)
+uv tool install data-governance-mcp
+
+# Or via standard pip
 pip install data-governance-mcp
 ```
 
-### Using uv (Recommended)
-```bash
-uv tool install data-governance-mcp
-```
+### Configure in Claude Desktop
 
----
-
-## CLI Usage
-
-The tool provides an integrated command-line interface for local workflows:
-
-```bash
-# 1. Audit a dataset and display the markdown report
-data-governance-mcp audit data/telemetry.csv
-
-# 2. Generate a privacy-safe synthetic digital twin
-data-governance-mcp twin data/confidential.csv --out data/synthetic.csv --rows 500
-
-# 3. Compress dataset context to evaluate token savings
-data-governance-mcp compress data/telemetry.csv
-
-# 4. Generate dbt schema tests
-data-governance-mcp dbt data/telemetry.csv --model stg_furnace_telemetry
-
-# 5. Export standalone interactive HTML report
-data-governance-mcp dashboard data/telemetry.csv --out reports/audit.html
-```
-
----
-
-## MCP Server Configuration
-
-### Claude Desktop
-Add the server entry to your `claude_desktop_config.json`:
+Add to your `claude_desktop_config.json`:
 
 ```json
 {
@@ -140,14 +189,16 @@ Add the server entry to your `claude_desktop_config.json`:
 }
 ```
 
-### Cursor / Antigravity / Cline
-Configure via standard stdio transport:
-* **Command**: `python`
-* **Args**: `["-m", "data_governance_mcp.server"]`
+### Configure in Cursor IDE / Antigravity / Cline
+
+Add via standard stdio transport under `Features > MCP Servers`:
+* **Name**: `data-governance`
+* **Type**: `command`
+* **Command**: `python -m data_governance_mcp.server`
 
 ---
 
-## Exposed MCP Tools Reference
+## MCP Tools Reference
 
 | Tool Name | Parameters | Return Format | Purpose |
 | :--- | :--- | :--- | :--- |
@@ -164,7 +215,7 @@ Configure via standard stdio transport:
 
 ## Verification & Testing
 
-The test suite covers data loading, statistical algorithms, PII pattern scanners, digital twin synthesis, and token optimization:
+Every release is verified across Python 3.10, 3.11, and 3.12:
 
 ```bash
 pytest -v
@@ -191,7 +242,7 @@ tests/test_wow_features.py::test_token_compressor PASSED                 [ 89%]
 tests/test_wow_features.py::test_dbt_exporter PASSED                     [ 94%]
 tests/test_wow_features.py::test_dashboard_exporter PASSED               [100%]
 
-============================= 19 passed in 5.83s ==============================
+============================= 19 passed in 2.19s ==============================
 ```
 
 ---

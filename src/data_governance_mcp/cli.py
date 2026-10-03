@@ -73,7 +73,59 @@ def main():
         if args.json:
             print(json.dumps(GovernanceReporter.render_json(scorecard, pii_result), indent=2))
         else:
-            print(GovernanceReporter.render_markdown(scorecard, pii_result))
+            try:
+                from rich.console import Console
+                from rich.table import Table
+                from rich.panel import Panel
+                from rich.text import Text
+
+                console = Console()
+                score = scorecard.overall_score
+                color = "green" if score >= 90 else ("yellow" if score >= 75 else "red")
+
+                header_text = Text()
+                header_text.append("Dataset: ", style="bold white")
+                header_text.append(f"{source_desc}\n", style="cyan")
+                header_text.append("Records: ", style="bold white")
+                header_text.append(f"{scorecard.total_records:,}  |  ", style="magenta")
+                header_text.append("DAMA-DMBOK Score: ", style="bold white")
+                header_text.append(f"{score:.1f} / 100 ({scorecard.status_label})\n", style=f"bold {color}")
+                header_text.append("Security & PII Risk: ", style="bold white")
+                pii_color = "green" if not pii_result.has_pii_risk else ("red" if pii_result.risk_level in ("HIGH", "CRITICAL") else "yellow")
+                header_text.append(f"{pii_result.risk_level} ({pii_result.total_findings} findings flagged)", style=f"bold {pii_color}")
+
+                console.print(Panel(header_text, title="[bold cyan]DATA GOVERNANCE & PRIVACY TWIN AUDIT[/bold cyan]", border_style="cyan"))
+
+                table = Table(title="DAMA-DMBOK 6 Core Quality Dimensions", border_style="blue")
+                table.add_column("Dimension", style="bold white")
+                table.add_column("Weight", justify="center", style="dim")
+                table.add_column("Score", justify="right")
+                table.add_column("Status", justify="center")
+                table.add_column("Diagnostics", style="italic")
+
+                for name, dim in scorecard.dimension_scores.items():
+                    dim_col = "green" if dim.status == "PASS" else ("yellow" if dim.status == "WARNING" else "red")
+                    w = getattr(DataQualityEvaluator, "DEFAULT_WEIGHTS", {}).get(name, 0.15) * 100
+                    table.add_row(
+                        name,
+                        f"{w:.0f}%",
+                        f"[{dim_col}]{dim.score:.1f}%[/]",
+                        f"[{dim_col}][ {dim.status} ][/]",
+                        dim.summary,
+                    )
+
+                console.print(table)
+
+                console.print(Panel(
+                    f"[bold yellow]Recommended Remediation Workflow:[/bold yellow]\n"
+                    f"1. Generate privacy twin:  [bold green]data-governance-mcp twin {args.file_path} --out twin.csv[/bold green]\n"
+                    f"2. Export dbt tests:       [bold green]data-governance-mcp dbt {args.file_path} --model stg_model[/bold green]\n"
+                    f"3. Generate HTML report:   [bold green]data-governance-mcp dashboard {args.file_path} --out audit.html[/bold green]",
+                    border_style="yellow",
+                    title="[bold yellow]Action Plan[/bold yellow]",
+                ))
+            except Exception:
+                print(GovernanceReporter.render_markdown(scorecard, pii_result))
 
     elif args.command == "twin":
         df, _ = DatasetLoader.load(args.file_path)
