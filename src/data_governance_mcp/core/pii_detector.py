@@ -73,25 +73,26 @@ class PIIDetector:
                         total_findings += 1
                         break
 
-            # 2. Content pattern matching on string columns
-            s = sample_df[col].dropna().astype(str)
-            if len(s) > 0 and s.dtype == "object":
-                for pii_name, pattern in cls.PATTERNS.items():
-                    matches = s.apply(lambda val: bool(pattern.search(val)))
-                    match_count = int(matches.sum())
-                    if match_count > 0:
-                        severity = "CRITICAL" if pii_name in ("API_SECRET_TOKEN", "CREDIT_CARD") else "HIGH"
-                        rank = 4 if severity == "CRITICAL" else 3
-                        max_severity_rank = max(max_severity_rank, rank)
-                        finding = {
-                            "type": "PATTERN_MATCH",
-                            "pattern": pii_name,
-                            "severity": severity,
-                            "sample_matches": match_count,
-                            "sample_rate": round(match_count / len(s), 4),
-                        }
-                        col_findings.append(finding)
-                        total_findings += 1
+            # 2. Content pattern matching on string/object columns
+            if pd.api.types.is_string_dtype(sample_df[col]) or pd.api.types.is_object_dtype(sample_df[col]):
+                s = sample_df[col].dropna().astype(str)
+                if len(s) > 0:
+                    for pii_name, pattern in cls.PATTERNS.items():
+                        matches = s.apply(lambda val: bool(pattern.search(val)))
+                        match_count = int(matches.sum())
+                        if match_count > 0:
+                            severity = "CRITICAL" if pii_name in ("API_SECRET_TOKEN", "CREDIT_CARD") else "HIGH"
+                            rank = 4 if severity == "CRITICAL" else 3
+                            max_severity_rank = max(max_severity_rank, rank)
+                            finding = {
+                                "type": "PATTERN_MATCH",
+                                "pattern": pii_name,
+                                "severity": severity,
+                                "sample_matches": match_count,
+                                "sample_rate": round(match_count / len(s), 4),
+                            }
+                            col_findings.append(finding)
+                            total_findings += 1
 
             if col_findings:
                 findings_by_col[col] = col_findings

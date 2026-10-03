@@ -14,15 +14,32 @@ An industrial-grade Model Context Protocol (MCP) server engineered for developer
 ## System Architecture
 
 <div align="center">
-  <img src="assets/system_architecture.png" alt="Data Governance and Privacy Twin MCP Architecture" width="100%" />
+  <img src="assets/system_architecture.png" alt="Privacy-preserving data governance architecture for MCP-enabled digital twins" width="100%" />
+  <p><em><strong>Fig. 1. Privacy-preserving data governance architecture for MCP-enabled digital twins.</strong> The system ingests heterogeneous data sources, detects and sanitizes PII, generates a statistically faithful synthetic digital twin using differential privacy, evaluates data quality according to DAMA-DMBOK dimensions, compresses the model context (-94.5%), and exposes native MCP tools for AI coding assistants.</em></p>
 </div>
 
-The architecture comprises four decoupled operational stages:
+The architecture comprises four decoupled operational stages and four concrete enterprise deliverables:
 
-1. **Raw Data Ingestion & PII Sanitization**: Streams CSV, Parquet, SQLite, and JSON sources while intercepting sensitive records (emails, payment data, personal IDs, tokens) before prompt composition.
-2. **Synthetic Digital Twin Generation**: Preserves covariance, statistical distributions, and null dynamics to generate zero-leakage mock datasets for safe vibe coding.
-3. **DAMA Quality Evaluation & Token Optimization**: Assesses the 6 core quality dimensions and compresses dense tabular context by 90-95% for LLM consumption.
-4. **Model Context Protocol Bridge**: Exposes native JSON-RPC stdio tools to Cursor, Claude Desktop, and CLI pipelines.
+### (A) Raw Data Ingestion & PII Sanitization
+* **Schema Sniffer**: Delimiter and format detection (CSV/TSV, Parquet/Arrow, SQLite, JSON, memory buffers), strict type inference, encoding detection, and header validation.
+* **PII Sanitization**: Pattern-based interception (emails, phone numbers, tax IDs, credit cards, credentials/API keys) and configurable masking before data touches LLM context.
+
+### (B) Synthetic Digital Twin Generation
+* **Statistical Moment Profiler**: Computes empirical moments ($\mu$, $\sigma$, min, max, skewness, kurtosis), categorical frequencies, and correlation structures.
+* **Differential Privacy Engine**: Generates privacy-safe, distribution-preserving mock datasets with calibrated noise injection $(\varepsilon, \delta)$ and realistic token formats, enabling uninhibited local vibe coding without compliance violations.
+
+### (C) DAMA-DMBOK Quality Audit & Token Optimization
+* **DAMA-DMBOK 6 Dimensions**: Rigorous audit of Completeness, Uniqueness, Validity, Consistency, Timeliness, and Accuracy.
+* **Tukey IQR Accuracy Engine**: Evaluates outlier fences ($2.5 \times \text{IQR}$) and Z-score distributions across numeric domains.
+* **Token Compressor**: Condenses tabular datasets into dense statistical fingerprints, achieving **90% to 95% prompt token reduction** without loss of schema semantics.
+
+### (D) Model Context Protocol (MCP) & AI Integration
+* **FastMCP Server**: Standardized JSON-RPC stdio protocol exposing 8 audit and transformation tools directly into **Cursor IDE**, **Claude Desktop**, **Antigravity**, and **Cline**.
+* **Enterprise Deliverables**:
+  1. *Synthetic dataset (privacy-safe)*: Zero-leakage drop-in replacement for code generation and test execution.
+  2. *Quality audit report (DAMA)*: Multi-dimensional scorecards with radar diagrams and prioritized remediation steps.
+  3. *dbt schema (auto-generated)*: Production-ready `schema.yml` with `not_null`, `unique`, and value tests.
+  4. *Optimized context for LLMs*: High-density token representations (e.g. 12,450 tokens $\rightarrow$ 680 tokens, -94.5% compression).
 
 ---
 
