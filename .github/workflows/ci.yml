@@ -31,4 +31,4 @@ jobs:
       env:
         PYTHONPATH: src
       run: |
-        pytest -v
+        python -m pytest -v --tb=short || (python -m pytest -v --tb=short ; exit 1)
