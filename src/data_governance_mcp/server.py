@@ -16,11 +16,10 @@ from .core.token_compressor import TokenCompressor
 from .core.dbt_exporter import DbtExporter
 from .core.dashboard import DashboardExporter
 
-# Initialize FastMCP Server
-mcp = FastMCP(
-    name="Data Governance MCP",
-    instructions="Enterprise-grade DAMA-DMBOK data quality audit, synthetic privacy digital twin, and token optimization server for AI agents.",
-)
+# Initialize FastMCP Server (compatible with all mcp 1.x releases)
+mcp = FastMCP("Data Governance MCP")
+if hasattr(mcp, "instructions"):
+    mcp.instructions = "Enterprise-grade DAMA-DMBOK data quality audit, synthetic privacy digital twin, and token optimization server for AI agents."
 
 
 @mcp.tool()
