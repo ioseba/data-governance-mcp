@@ -17,14 +17,24 @@
 
 ---
 
-## 🏛️ Architectural Blueprint & Technical Specification
+## 🏛️ System Architecture & Workflow
 
-The following schematic outlines the architectural dataflow between the ingestion pipeline, the DAMA data quality evaluation engine, the PII privacy filter, and the host AI agent via MCP:
+The protocol operates as an automated intermediary audit layer between heterogeneous tabular storage and LLM reasoning engines:
 
 <div align="center">
-  <img src="assets/patent_schematic.jpg" alt="AI Data Governance & Quality Protocol Architecture" width="100%" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);" />
-  <p><em>FIG. 1: Formal Block Diagram & Operational Dataflow of the AI Data Governance & Quality Protocol (Patent-Style Schematic Specification).</em></p>
+  <img src="assets/architecture_diagram.svg" alt="Data Governance MCP Architecture Workflow" width="100%" />
 </div>
+
+```mermaid
+flowchart LR
+    A["Heterogeneous Data Sources<br/>(CSV, Parquet, SQLite, JSON)"] --> B["data-governance-mcp<br/>Audit & Quality Engine"]
+    subgraph Engine ["Core Evaluation Layer"]
+        B --> C["DAMA-DMBOK 6 Dimensions<br/>(Completeness, Uniqueness, Validity, etc.)"]
+        B --> D["Zero-Trust PII Shield<br/>(Secrets, Emails, DNI, Payment Info)"]
+    end
+    C & D --> E["Standard MCP Protocol<br/>(stdio JSON-RPC)"]
+    E --> F["AI Agents<br/>(Claude, Cursor, Antigravity, Cline)"]
+```
 
 ---
 
