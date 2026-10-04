@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/hero_banner.svg" alt="Data Governance and Privacy Twin MCP" width="100%" />
+  <img src="assets/hero_banner.png" alt="Data Governance and Privacy Twin MCP" width="100%" />
 </p>
 
 <p align="center">
@@ -104,10 +104,6 @@ Generate zero-dependency, self-contained executive audit reports containing inte
 ```bash
 data-governance-mcp dashboard telemetry.csv --out audit_report.html
 ```
-
-<div align="center">
-  <img src="assets/dashboard_real_execution.png" alt="Interactive HTML Audit Dashboard Real Execution" width="100%" />
-</div>
 
 ---
 
