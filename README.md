@@ -1,30 +1,28 @@
-<div align="center">
+<p align="center">
+  <img src="assets/hero_banner.svg" alt="Data Governance and Privacy Twin MCP" width="100%" />
+</p>
 
-  <img src="assets/hero_banner.svg" alt="Data Governance & Privacy Twin MCP Banner" width="100%" />
+<p align="center">
+  <a href="https://github.com/ioseba/data-governance-mcp/actions"><img src="https://github.com/ioseba/data-governance-mcp/actions/workflows/ci.yml/badge.svg" alt="CI Quality &amp; Tests" /></a>
+  <a href="https://python.org"><img src="https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-38bdf8.svg?style=flat&amp;logo=python&amp;logoColor=white" alt="Python Matrix" /></a>
+  <a href="https://modelcontextprotocol.io"><img src="https://img.shields.io/badge/MCP-1.2.0%2B-818cf8.svg?style=flat&amp;logo=databricks&amp;logoColor=white" alt="MCP Protocol" /></a>
+  <a href="https://dama.org"><img src="https://img.shields.io/badge/Standard-DAMA--DMBOK%20%2F%20CDMP-10b981.svg?style=flat" alt="DAMA-DMBOK Standard" /></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-64748b.svg?style=flat" alt="License: MIT" /></a>
+</p>
 
-  <br />
+<p align="center">
+  <strong>Enterprise data governance meets AI coding.</strong><br />
+  An industrial-grade Model Context Protocol (MCP) server that autonomously audits datasets against certified DAMA-DMBOK standards, generates differential-privacy synthetic twins, slashes LLM prompt context by 95%, and exports production-ready dbt test suites.
+</p>
 
-  [![CI Quality & Tests](https://github.com/ioseba/data-governance-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/ioseba/data-governance-mcp/actions)
-  [![Python Matrix](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-38bdf8.svg?style=flat&logo=python&logoColor=white)](https://python.org)
-  [![MCP Protocol](https://img.shields.io/badge/MCP-1.2.0%2B-818cf8.svg?style=flat&logo=databricks&logoColor=white)](https://modelcontextprotocol.io)
-  [![DAMA-DMBOK Standard](https://img.shields.io/badge/Standard-DAMA--DMBOK%20%2F%20CDMP-10b981.svg?style=flat)](https://dama.org)
-  [![License: MIT](https://img.shields.io/badge/License-MIT-64748b.svg?style=flat)](LICENSE)
-
-  <p align="center">
-    <strong>Enterprise data governance meets AI coding.</strong><br />
-    An industrial-grade Model Context Protocol (MCP) server that autonomously audits datasets against certified DAMA-DMBOK standards, generates differential-privacy synthetic twins, slashes LLM prompt context by 95%, and exports production-ready dbt test suites.
-  </p>
-
-  <p align="center">
-    <a href="#quickstart">Quickstart</a> &bull;
-    <a href="#why-vibe-coding-demands-governance">Why Governance?</a> &bull;
-    <a href="#system-architecture">Architecture</a> &bull;
-    <a href="#terminal-cli-experience">Terminal CLI</a> &bull;
-    <a href="#interactive-html-dashboard">HTML Dashboard</a> &bull;
-    <a href="#mcp-tools-reference">MCP Tools</a>
-  </p>
-
-</div>
+<p align="center">
+  <a href="#quickstart">Quickstart</a> &bull;
+  <a href="#the-vibe-coding-problem-vs-the-solution">Why Governance?</a> &bull;
+  <a href="#system-architecture">Architecture</a> &bull;
+  <a href="#terminal-cli-experience">Terminal CLI</a> &bull;
+  <a href="#interactive-html-dashboard">HTML Dashboard</a> &bull;
+  <a href="#mcp-tools-reference">MCP Tools</a>
+</p>
 
 ---
 

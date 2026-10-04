@@ -2,74 +2,67 @@
   <defs>
     <!-- Background Gradient -->
     <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0a0e17" />
+      <stop offset="0%" stop-color="#090d16" />
       <stop offset="50%" stop-color="#0f172a" />
-      <stop offset="100%" stop-color="#090d16" />
+      <stop offset="100%" stop-color="#0a0f1d" />
     </linearGradient>
 
-    <!-- Accent Gradients -->
+    <!-- Accent Title Gradient -->
     <linearGradient id="primaryGrad" x1="0%" y1="0%" x2="100%" y2="0%">
       <stop offset="0%" stop-color="#38bdf8" />
       <stop offset="50%" stop-color="#818cf8" />
       <stop offset="100%" stop-color="#c084fc" />
     </linearGradient>
 
+    <!-- Shield Fill Gradient -->
     <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0ea5e9" stop-opacity="0.8" />
-      <stop offset="100%" stop-color="#6366f1" stop-opacity="0.2" />
+      <stop offset="0%" stop-color="#0ea5e9" stop-opacity="0.35" />
+      <stop offset="100%" stop-color="#6366f1" stop-opacity="0.1" />
     </linearGradient>
 
+    <!-- Badge Card Gradient -->
     <linearGradient id="badgeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#1e293b" stop-opacity="0.9" />
-      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.9" />
+      <stop offset="0%" stop-color="#1e293b" />
+      <stop offset="100%" stop-color="#0f172a" />
     </linearGradient>
-
-    <!-- Glow Filters -->
-    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="12" result="blur" />
-      <feComposite in="SourceGraphic" in2="blur" operator="over" />
-    </filter>
-    <filter id="subtleGlow" x="-10%" y="-10%" width="120%" height="120%">
-      <feGaussianBlur stdDeviation="4" result="blur" />
-      <feComposite in="SourceGraphic" in2="blur" operator="over" />
-    </filter>
 
     <!-- Cyber Grid Pattern -->
     <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
       <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width="0.75" stroke-opacity="0.4" />
-      <circle cx="40" cy="40" r="1" fill="#38bdf8" fill-opacity="0.3" />
+      <circle cx="40" cy="40" r="1" fill="#38bdf8" fill-opacity="0.25" />
     </pattern>
   </defs>
 
   <style>
-    .title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', sans-serif; font-weight: 800; font-size: 42px; letter-spacing: -0.5px; }
-    .subtitle { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', sans-serif; font-weight: 400; font-size: 18px; fill: #94a3b8; letter-spacing: 0.2px; }
-    .badge-text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', sans-serif; font-weight: 600; font-size: 13px; fill: #f1f5f9; letter-spacing: 0.3px; }
-    .meta-text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', sans-serif; font-weight: 500; font-size: 12px; fill: #64748b; letter-spacing: 0.5px; }
-    .brand-tag { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', sans-serif; font-weight: 700; font-size: 11px; fill: #38bdf8; letter-spacing: 1.8px; text-transform: uppercase; }
+    .title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', Helvetica, Arial, sans-serif; font-weight: 800; font-size: 40px; letter-spacing: -0.5px; }
+    .subtitle { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', Helvetica, Arial, sans-serif; font-weight: 400; font-size: 17px; fill: #94a3b8; }
+    .badge-text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', Helvetica, Arial, sans-serif; font-weight: 600; font-size: 13px; fill: #f1f5f9; }
+    .meta-text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', Helvetica, Arial, sans-serif; font-weight: 600; font-size: 11px; fill: #64748b; letter-spacing: 0.5px; }
+    .brand-tag { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', Helvetica, Arial, sans-serif; font-weight: 700; font-size: 11px; fill: #38bdf8; letter-spacing: 1.5px; }
   </style>
 
   <!-- Background Base -->
   <rect width="100%" height="100%" fill="url(#bgGrad)" rx="16" />
   <rect width="100%" height="100%" fill="url(#grid)" rx="16" />
 
-  <!-- Ambient Light Orbs -->
-  <circle cx="150" cy="190" r="180" fill="#0284c7" fill-opacity="0.12" filter="url(#glow)" />
-  <circle cx="1100" cy="80" r="160" fill="#7c3aed" fill-opacity="0.1" filter="url(#glow)" />
+  <!-- Ambient Glow Cones (Vector Opacity, Zero CPU Filters) -->
+  <circle cx="150" cy="190" r="160" fill="#0284c7" fill-opacity="0.12" />
+  <circle cx="150" cy="190" r="100" fill="#0284c7" fill-opacity="0.08" />
+  <circle cx="1100" cy="80" r="180" fill="#7c3aed" fill-opacity="0.08" />
 
   <!-- Outer Border -->
-  <rect width="1278" height="378" x="1" y="1" fill="none" stroke="#334155" stroke-width="1.5" stroke-opacity="0.6" rx="16" />
+  <rect width="1278" height="378" x="1" y="1" fill="none" stroke="#334155" stroke-width="1.5" stroke-opacity="0.7" rx="16" />
 
   <!-- Left: Hero Isometric Data Shield Icon -->
   <g transform="translate(45, 65)">
     <!-- Circuit lines leading to shield -->
-    <path d="M 40 120 L 95 120 M 125 50 L 125 90 M 125 160 L 125 200 M 160 120 L 210 120" stroke="#38bdf8" stroke-width="1.5" stroke-opacity="0.3" stroke-dasharray="3,3" />
+    <path d="M 40 120 L 95 120 M 125 50 L 125 90 M 125 160 L 125 200 M 160 120 L 210 120" stroke="#38bdf8" stroke-width="1.5" stroke-opacity="0.4" stroke-dasharray="3,3" />
 
     <!-- Outer Hex Shield -->
-    <polygon points="125,20 215,70 215,180 125,230 35,180 35,70" fill="url(#shieldGrad)" stroke="#38bdf8" stroke-width="2.5" filter="url(#subtleGlow)" />
+    <polygon points="125,20 215,70 215,180 125,230 35,180 35,70" fill="url(#shieldGrad)" stroke="#38bdf8" stroke-width="2.5" />
 
     <!-- Inner Core Hex -->
-    <polygon points="125,50 190,85 190,165 125,200 60,165 60,85" fill="#090d16" fill-opacity="0.85" stroke="#818cf8" stroke-width="1.5" />
+    <polygon points="125,50 190,85 190,165 125,200 60,165 60,85" fill="#090d16" fill-opacity="0.9" stroke="#818cf8" stroke-width="1.5" />
 
     <!-- Data Nodes and Flow Diagram inside Shield -->
     <circle cx="125" cy="85" r="7" fill="#38bdf8" />
@@ -85,13 +78,13 @@
 
     <!-- Central Microchip Icon -->
     <rect x="110" y="112" width="30" height="26" rx="4" fill="#0f172a" stroke="#38bdf8" stroke-width="1.5" />
-    <text x="125" y="129" fill="#38bdf8" font-family="-apple-system, sans-serif" font-size="10" font-weight="800" text-anchor="middle">MCP</text>
+    <text x="125" y="129" fill="#38bdf8" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" font-weight="800" text-anchor="middle">MCP</text>
   </g>
 
   <!-- Center & Right: Content Block -->
   <g transform="translate(300, 75)">
     <!-- Small Category Label -->
-    <text x="0" y="24" class="brand-tag">MODEL CONTEXT PROTOCOL &bull; DAMA-DMBOK STANDARDS &bull; DIFFERENTIAL PRIVACY</text>
+    <text x="0" y="24" class="brand-tag">MODEL CONTEXT PROTOCOL &#8226; DAMA-DMBOK STANDARDS &#8226; DIFFERENTIAL PRIVACY</text>
 
     <!-- Main Title -->
     <text x="0" y="72" class="title" fill="url(#primaryGrad)">Data Governance &amp; Privacy Twin MCP</text>
@@ -103,28 +96,28 @@
     <g transform="translate(0, 140)">
       <!-- Badge 1: Privacy Twin -->
       <g transform="translate(0, 0)">
-        <rect width="215" height="42" rx="10" fill="url(#badgeGrad)" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.8" />
+        <rect width="215" height="42" rx="10" fill="url(#badgeGrad)" stroke="#38bdf8" stroke-width="1.2" />
         <circle cx="22" cy="21" r="6" fill="#38bdf8" />
         <text x="38" y="26" class="badge-text">Differential Privacy Twins</text>
       </g>
 
       <!-- Badge 2: Token Compression -->
       <g transform="translate(225, 0)">
-        <rect width="205" height="42" rx="10" fill="url(#badgeGrad)" stroke="#818cf8" stroke-width="1.2" stroke-opacity="0.8" />
+        <rect width="205" height="42" rx="10" fill="url(#badgeGrad)" stroke="#818cf8" stroke-width="1.2" />
         <circle cx="22" cy="21" r="6" fill="#818cf8" />
         <text x="38" y="26" class="badge-text">-95% LLM Token Savings</text>
       </g>
 
       <!-- Badge 3: DAMA Audit -->
       <g transform="translate(440, 0)">
-        <rect width="220" height="42" rx="10" fill="url(#badgeGrad)" stroke="#34d399" stroke-width="1.2" stroke-opacity="0.8" />
+        <rect width="220" height="42" rx="10" fill="url(#badgeGrad)" stroke="#34d399" stroke-width="1.2" />
         <circle cx="22" cy="21" r="6" fill="#34d399" />
         <text x="38" y="26" class="badge-text">DAMA-DMBOK 6 Dimensions</text>
       </g>
 
       <!-- Badge 4: Production dbt -->
       <g transform="translate(670, 0)">
-        <rect width="200" height="42" rx="10" fill="url(#badgeGrad)" stroke="#f472b6" stroke-width="1.2" stroke-opacity="0.8" />
+        <rect width="200" height="42" rx="10" fill="url(#badgeGrad)" stroke="#f472b6" stroke-width="1.2" />
         <circle cx="22" cy="21" r="6" fill="#f472b6" />
         <text x="38" y="26" class="badge-text">Instant dbt Test Suites</text>
       </g>
@@ -133,14 +126,8 @@
     <!-- Bottom Line: Integrations & Protocol Support -->
     <g transform="translate(0, 215)">
       <text x="0" y="16" class="meta-text">NATIVE PROTOCOL INTEGRATION WITH:</text>
-      <text x="240" y="16" class="meta-text" fill="#94a3b8" font-weight="600">
-        <tspan fill="#f8fafc">Cursor</tspan> &bull; 
-        <tspan fill="#f8fafc">Claude Desktop</tspan> &bull; 
-        <tspan fill="#f8fafc">Antigravity</tspan> &bull; 
-        <tspan fill="#f8fafc">Cline</tspan> &bull; 
-        <tspan fill="#f8fafc">Devin</tspan> &bull; 
-        <tspan fill="#f8fafc">Windsurf</tspan> &bull; 
-        <tspan fill="#f8fafc">FastMCP CLI</tspan>
+      <text x="240" y="16" class="meta-text" fill="#cbd5e1">
+        Cursor IDE &#8226; Claude Desktop &#8226; Antigravity &#8226; Cline &#8226; Devin &#8226; Windsurf &#8226; FastMCP CLI
       </text>
     </g>
   </g>
