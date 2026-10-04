@@ -106,7 +106,7 @@ data-governance-mcp dashboard telemetry.csv --out audit_report.html
 ```
 
 <div align="center">
-  <img src="assets/dashboard_preview.svg" alt="Interactive HTML Audit Dashboard Preview" width="100%" />
+  <img src="assets/dashboard_real_execution.png" alt="Interactive HTML Audit Dashboard Real Execution" width="100%" />
 </div>
 
 ---
