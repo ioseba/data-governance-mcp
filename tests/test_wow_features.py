@@ -1,14 +1,13 @@
 """Unit tests for synthetic twin, token compressor, dbt exporter, and dashboard."""
 
-import json
-from pathlib import Path
 import pandas as pd
-from data_governance_mcp.core.synthetic_twin import SyntheticTwinGenerator
-from data_governance_mcp.core.token_compressor import TokenCompressor
-from data_governance_mcp.core.dbt_exporter import DbtExporter
+
 from data_governance_mcp.core.dashboard import DashboardExporter
+from data_governance_mcp.core.dbt_exporter import DbtExporter
 from data_governance_mcp.core.dimensions import DataQualityEvaluator
 from data_governance_mcp.core.pii_detector import PIIDetector
+from data_governance_mcp.core.synthetic_twin import SyntheticTwinGenerator
+from data_governance_mcp.core.token_compressor import TokenCompressor
 
 
 def test_synthetic_twin_generator():

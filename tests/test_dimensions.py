@@ -1,7 +1,7 @@
 """Unit tests for DAMA-DMBOK 6 data quality dimensions."""
 
 import pandas as pd
-import pytest
+
 from data_governance_mcp.core.dimensions import DataQualityEvaluator
 
 

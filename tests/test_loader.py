@@ -1,8 +1,7 @@
 """Unit tests for dataset loading functionality."""
 
 import sqlite3
-import pandas as pd
-import pytest
+
 from data_governance_mcp.core.loader import DatasetLoader
 
 

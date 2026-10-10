@@ -3,7 +3,8 @@
 from __future__ import annotations
 
 import json
-from typing import Dict, Any
+from typing import Any
+
 import numpy as np
 import pandas as pd
 
@@ -12,7 +13,7 @@ class TokenCompressor:
     """Condenses large datasets into an ultra-dense lossless statistical context fingerprint for LLMs."""
 
     @classmethod
-    def compress(cls, df: pd.DataFrame, dataset_name: str = "dataset") -> Dict[str, Any]:
+    def compress(cls, df: pd.DataFrame, dataset_name: str = "dataset") -> dict[str, Any]:
         n_rows, n_cols = df.shape
         raw_csv_str = df.to_csv(index=False)
         raw_char_count = len(raw_csv_str)

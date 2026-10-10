@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import pandas as pd
+
 from .dimensions import QualityScorecard
 
 
@@ -51,7 +52,7 @@ class DbtExporter:
             if is_numeric and len(series.dropna()) > 0:
                 min_v = series.min()
                 if min_v >= 0:
-                    tests.append(f"dbt_utils.expression_is_true:\n              expression: '>= 0'")
+                    tests.append("dbt_utils.expression_is_true:\n              expression: '>= 0'")
 
             lines.append(f"      - name: {col}")
             lines.append(f"        description: 'Column {col} (dtype: {series.dtype}).'")

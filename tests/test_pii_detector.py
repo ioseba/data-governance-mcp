@@ -1,6 +1,7 @@
 """Unit tests for PII detection engine."""
 
 import pandas as pd
+
 from data_governance_mcp.core.pii_detector import PIIDetector
 
 

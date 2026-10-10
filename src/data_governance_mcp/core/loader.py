@@ -6,7 +6,6 @@ import io
 import os
 import sqlite3
 from pathlib import Path
-from typing import Optional, Tuple
 
 import pandas as pd
 
@@ -17,9 +16,9 @@ class DatasetLoader:
     @staticmethod
     def load(
         source: str,
-        table_name: Optional[str] = None,
-        max_rows: Optional[int] = None,
-    ) -> Tuple[pd.DataFrame, str]:
+        table_name: str | None = None,
+        max_rows: int | None = None,
+    ) -> tuple[pd.DataFrame, str]:
         """Loads data from a file path, SQLite URI, or raw delimited string.
 
         Returns:

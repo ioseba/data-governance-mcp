@@ -7,8 +7,22 @@ on:
     branches: [ main, master ]
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Run Ruff Linter
+        run: |
+          pip install ruff
+          ruff check src tests
+
   test:
     runs-on: ubuntu-latest
+    needs: [lint]
     strategy:
       fail-fast: false
       matrix:
@@ -31,4 +45,4 @@ jobs:
       env:
         PYTHONPATH: src
       run: |
-        python -m pytest -v --tb=short || (python -m pytest -v --tb=short ; exit 1)
+        python -m pytest -v --tb=short

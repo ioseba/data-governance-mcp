@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 
-from typing import Any, Dict
+from typing import Any
+
 from .dimensions import QualityScorecard
 from .pii_detector import PIIScanResult
 
@@ -23,12 +24,12 @@ class GovernanceReporter:
         pii_emoji = "🛡️" if not pii_result.has_pii_risk else ("⚠️" if pii_result.risk_level in ("LOW", "MEDIUM") else "🚨")
 
         md = []
-        md.append(f"# 🛡️ Data Governance & Quality Audit Report")
+        md.append("# 🛡️ Data Governance & Quality Audit Report")
         md.append(f"> **Target Dataset**: `{scorecard.source_info}` | **Records**: `{scorecard.total_records:,}` | **Columns**: `{scorecard.total_columns}`\n")
 
         md.append("## 📊 Executive Summary\n")
-        md.append(f"| Metric | Value | Compliance Status |")
-        md.append(f"| :--- | :--- | :--- |")
+        md.append("| Metric | Value | Compliance Status |")
+        md.append("| :--- | :--- | :--- |")
         md.append(f"| **DAMA Overall Quality Index** | **`{score:.1f} / 100`** | {status_emoji} **{status_label}** |")
         md.append(f"| **Privacy & PII Exposure Risk** | **`{pii_result.risk_level}`** | {pii_emoji} **{pii_result.total_findings} findings** |")
         md.append(f"| **Critical Blockers** | **`{len(scorecard.critical_issues)}`** | {'✅ Clean' if not scorecard.critical_issues else '❌ Remediation Required'} |\n")
@@ -79,7 +80,7 @@ class GovernanceReporter:
         return "\n".join(md)
 
     @staticmethod
-    def render_json(scorecard: QualityScorecard, pii_result: PIIScanResult) -> Dict[str, Any]:
+    def render_json(scorecard: QualityScorecard, pii_result: PIIScanResult) -> dict[str, Any]:
         """Consolidates complete audit in structured JSON dictionary."""
         return {
             "scorecard": scorecard.to_dict(),

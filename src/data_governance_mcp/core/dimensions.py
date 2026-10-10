@@ -3,7 +3,8 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Any, Dict, List, Optional
+from typing import Any
+
 import numpy as np
 import pandas as pd
 
@@ -15,8 +16,8 @@ class DimensionResult:
     score: float  # 0.0 to 100.0
     status: str   # PASS, WARNING, FAIL
     summary: str
-    details: Dict[str, Any] = field(default_factory=dict)
-    remediations: List[str] = field(default_factory=list)
+    details: dict[str, Any] = field(default_factory=dict)
+    remediations: list[str] = field(default_factory=list)
 
 
 @dataclass
@@ -25,8 +26,8 @@ class QualityScorecard:
     overall_score: float
     total_records: int
     total_columns: int
-    dimension_scores: Dict[str, DimensionResult]
-    critical_issues: List[str]
+    dimension_scores: dict[str, DimensionResult]
+    critical_issues: list[str]
     source_info: str
 
     @property
@@ -37,7 +38,7 @@ class QualityScorecard:
             return "ACCEPTABLE"
         return "CRITICAL"
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         return {
             "overall_score": round(self.overall_score, 2),
             "health_status": self.status_label,
@@ -75,7 +76,7 @@ class DataQualityEvaluator:
         self.source_name = source_name
         self.n_rows, self.n_cols = df.shape
 
-    def evaluate_all(self, thresholds: Optional[Dict[str, float]] = None) -> QualityScorecard:
+    def evaluate_all(self, thresholds: dict[str, float] | None = None) -> QualityScorecard:
         """Runs evaluation across all 6 dimensions."""
         if self.n_rows == 0:
             empty_res = DimensionResult("Empty", 0.0, "FAIL", "Dataset has 0 rows.")

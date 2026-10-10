@@ -3,9 +3,10 @@
 from __future__ import annotations
 
 import random
-from typing import Optional, Tuple
+
 import numpy as np
 import pandas as pd
+
 from .pii_detector import PIIDetector
 
 
@@ -16,9 +17,9 @@ class SyntheticTwinGenerator:
     def generate(
         cls,
         df: pd.DataFrame,
-        n_rows: Optional[int] = None,
+        n_rows: int | None = None,
         random_seed: int = 42,
-    ) -> Tuple[pd.DataFrame, dict]:
+    ) -> tuple[pd.DataFrame, dict]:
         """Synthesizes a digital twin dataset with zero sensitive or proprietary leakage."""
         np.random.seed(random_seed)
         random.seed(random_seed)

@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-import json
 import math
+
 from .dimensions import QualityScorecard
 from .pii_detector import PIIScanResult
 
@@ -183,8 +183,9 @@ class DashboardExporter:
         <p style="color: #94a3b8; margin: 6px 0 0 0; font-size: 13px;">Target: <code>{scorecard.source_info}</code> &bull; Records: <strong>{scorecard.total_records:,}</strong> &bull; Dimensions: <strong>6</strong></p>
       </div>
       <div class="score-circle">
-        <span style="font-size: 28px; color: {status_color};">{score:.0f}</span>
-        <span style="font-size: 10px; color: #94a3b8;">/ 100 DAMA</span>
+        <span style="font-size: 28px; color: {status_color}; font-weight: 800;">{score:.0f}</span>
+        <span style="font-size: 10px; color: {status_color}; font-weight: 700;">{status_label}</span>
+        <span style="font-size: 9px; color: #94a3b8;">/ 100 DAMA</span>
       </div>
     </div>
 

@@ -2,7 +2,14 @@
 
 import json
 from pathlib import Path
-from data_governance_mcp.server import audit_dataset, profile_schema, detect_pii, evaluate_dama_dimensions, suggest_remediations
+
+from data_governance_mcp.server import (
+    audit_dataset,
+    detect_pii,
+    evaluate_dama_dimensions,
+    profile_schema,
+    suggest_remediations,
+)
 
 SAMPLE_CSV = str(Path(__file__).parent.parent / "examples" / "sample_datasets" / "industrial_furnace_telemetry.csv")
 

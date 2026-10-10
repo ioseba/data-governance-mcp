@@ -4,17 +4,17 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-from typing import Any, Dict, Optional
+
 from mcp.server.fastmcp import FastMCP
 
-from .core.loader import DatasetLoader
+from .core.dashboard import DashboardExporter
+from .core.dbt_exporter import DbtExporter
 from .core.dimensions import DataQualityEvaluator
+from .core.loader import DatasetLoader
 from .core.pii_detector import PIIDetector
 from .core.reporter import GovernanceReporter
 from .core.synthetic_twin import SyntheticTwinGenerator
 from .core.token_compressor import TokenCompressor
-from .core.dbt_exporter import DbtExporter
-from .core.dashboard import DashboardExporter
 
 # Initialize FastMCP Server
 try:
@@ -29,7 +29,7 @@ except TypeError:
 @mcp.tool()
 def audit_dataset(
     file_path: str,
-    max_rows: Optional[int] = 50000,
+    max_rows: int | None = 50000,
 ) -> str:
     """Performs an end-to-end DAMA-DMBOK quality audit and PII vulnerability scan on a dataset.
 
@@ -47,14 +47,14 @@ def audit_dataset(
         pii_result = PIIDetector.scan(df)
         return GovernanceReporter.render_markdown(scorecard, pii_result)
     except Exception as exc:
-        return f"Error auditing dataset '{file_path}': {str(exc)}"
+        return f"Error auditing dataset '{file_path}': {exc!s}"
 
 
 @mcp.tool()
 def generate_synthetic_twin(
     file_path: str,
-    output_csv_path: Optional[str] = None,
-    n_rows: Optional[int] = None,
+    output_csv_path: str | None = None,
+    n_rows: int | None = None,
 ) -> str:
     """Generates a 100% privacy-safe synthetic digital twin of a dataset, preserving schema and statistical distributions.
 
@@ -85,7 +85,7 @@ def generate_synthetic_twin(
 
 
 @mcp.tool()
-def compress_context_for_llm(file_path: str, max_rows: Optional[int] = 10000) -> str:
+def compress_context_for_llm(file_path: str, max_rows: int | None = 10000) -> str:
     """Compresses large tabular datasets by 90-95% into a dense statistical context fingerprint.
 
     Dramatically reduces token consumption and eliminates LLM context window overflows in Cursor / Claude.
@@ -120,7 +120,7 @@ def export_dbt_tests(file_path: str, model_name: str = "stg_dataset") -> str:
         df, _ = DatasetLoader.load(file_path)
         return DbtExporter.generate_dbt_schema_yml(df, model_name=model_name)
     except Exception as exc:
-        return f"# Error generating dbt tests: {str(exc)}"
+        return f"# Error generating dbt tests: {exc!s}"
 
 
 @mcp.tool()
@@ -149,11 +149,11 @@ def export_html_dashboard(
         out_p.write_text(html_content, encoding="utf-8")
         return f"Successfully generated interactive dashboard: {out_p.resolve()}"
     except Exception as exc:
-        return f"Error exporting HTML dashboard: {str(exc)}"
+        return f"Error exporting HTML dashboard: {exc!s}"
 
 
 @mcp.tool()
-def profile_schema(file_path: str, max_rows: Optional[int] = 10000) -> str:
+def profile_schema(file_path: str, max_rows: int | None = 10000) -> str:
     """Profiles the dataset schema, data types, null rates, and distribution summaries."""
     try:
         df, source_desc = DatasetLoader.load(file_path, max_rows=max_rows)
@@ -178,7 +178,7 @@ def profile_schema(file_path: str, max_rows: Optional[int] = 10000) -> str:
 
 
 @mcp.tool()
-def detect_pii(file_path: str, max_sample_rows: Optional[int] = 500) -> str:
+def detect_pii(file_path: str, max_sample_rows: int | None = 500) -> str:
     """Scans dataset for personally identifiable information (PII), secrets, and compliance liabilities."""
     try:
         df, _ = DatasetLoader.load(file_path, max_rows=max_sample_rows)
@@ -252,7 +252,7 @@ def suggest_remediations(file_path: str) -> str:
 
         return "\n".join(lines)
     except Exception as exc:
-        return f"Error generating remediations: {str(exc)}"
+        return f"Error generating remediations: {exc!s}"
 
 
 def run_server():

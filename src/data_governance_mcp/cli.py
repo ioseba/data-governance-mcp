@@ -6,14 +6,15 @@ import argparse
 import json
 import sys
 from pathlib import Path
-from .core.loader import DatasetLoader
+
+from .core.dashboard import DashboardExporter
+from .core.dbt_exporter import DbtExporter
 from .core.dimensions import DataQualityEvaluator
+from .core.loader import DatasetLoader
 from .core.pii_detector import PIIDetector
 from .core.reporter import GovernanceReporter
 from .core.synthetic_twin import SyntheticTwinGenerator
 from .core.token_compressor import TokenCompressor
-from .core.dbt_exporter import DbtExporter
-from .core.dashboard import DashboardExporter
 from .server import run_server
 
 # Ensure UTF-8 output across all operating systems
@@ -75,8 +76,8 @@ def main():
         else:
             try:
                 from rich.console import Console
-                from rich.table import Table
                 from rich.panel import Panel
+                from rich.table import Table
                 from rich.text import Text
 
                 console = Console()

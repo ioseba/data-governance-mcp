@@ -4,7 +4,8 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass, field
-from typing import Any, Dict, List
+from typing import Any
+
 import pandas as pd
 
 
@@ -14,10 +15,10 @@ class PIIScanResult:
     total_findings: int
     has_pii_risk: bool
     risk_level: str  # NONE, LOW, MEDIUM, HIGH, CRITICAL
-    findings_by_column: Dict[str, List[Dict[str, Any]]] = field(default_factory=dict)
-    leakage_warnings: List[str] = field(default_factory=list)
+    findings_by_column: dict[str, list[dict[str, Any]]] = field(default_factory=dict)
+    leakage_warnings: list[str] = field(default_factory=list)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         return {
             "total_findings": self.total_findings,
             "has_pii_risk": self.has_pii_risk,
@@ -47,9 +48,9 @@ class PIIDetector:
 
     @classmethod
     def scan(cls, df: pd.DataFrame, max_sample_rows: int = 500) -> PIIScanResult:
-        findings_by_col: Dict[str, List[Dict[str, Any]]] = {}
+        findings_by_col: dict[str, list[dict[str, Any]]] = {}
         total_findings = 0
-        warnings: List[str] = []
+        warnings: list[str] = []
         max_severity_rank = 0  # 0: None, 1: Low, 2: Medium, 3: High, 4: Critical
 
         sample_df = df.iloc[:max_sample_rows] if len(df) > max_sample_rows else df
