@@ -154,7 +154,18 @@ def export_html_dashboard(
 
 @mcp.tool()
 def profile_schema(file_path: str, max_rows: int | None = 10000) -> str:
-    """Profiles the dataset schema, data types, null rates, and distribution summaries."""
+    """Profiles the dataset schema, data types, null rates, and distribution summaries.
+
+    Use this tool to get an immediate statistical overview of column types, cardinality,
+    and missing value percentages before running deeper governance audits.
+
+    Args:
+        file_path: Absolute or relative path to CSV, Parquet, JSON, or SQLite dataset.
+        max_rows: Maximum records to sample for profiling (default: 10,000).
+
+    Returns:
+        Structured JSON containing dataset dimensions, per-column dtypes, null ratios, and sample values.
+    """
     try:
         df, source_desc = DatasetLoader.load(file_path, max_rows=max_rows)
         profile = {
@@ -179,7 +190,18 @@ def profile_schema(file_path: str, max_rows: int | None = 10000) -> str:
 
 @mcp.tool()
 def detect_pii(file_path: str, max_sample_rows: int | None = 500) -> str:
-    """Scans dataset for personally identifiable information (PII), secrets, and compliance liabilities."""
+    """Scans dataset for personally identifiable information (PII), secrets, and compliance liabilities.
+
+    Identifies sensitive patterns including emails, phone numbers, SSNs, credit cards, IBANs,
+    and API credentials to prevent privacy violations in LLM prompts.
+
+    Args:
+        file_path: Absolute or relative path to the dataset file to inspect.
+        max_sample_rows: Number of rows to sample for pattern matching (default: 500).
+
+    Returns:
+        JSON string detailing detected PII categories, flagged column names, and risk severity.
+    """
     try:
         df, _ = DatasetLoader.load(file_path, max_rows=max_sample_rows)
         res = PIIDetector.scan(df, max_sample_rows=max_sample_rows or 500)
@@ -190,7 +212,17 @@ def detect_pii(file_path: str, max_sample_rows: int | None = 500) -> str:
 
 @mcp.tool()
 def evaluate_dama_dimensions(file_path: str) -> str:
-    """Evaluates dataset against the 6 core DAMA dimensions: Completeness, Uniqueness, Validity, Accuracy, Consistency, Timeliness."""
+    """Evaluates dataset against the 6 core DAMA dimensions: Completeness, Uniqueness, Validity, Accuracy, Consistency, Timeliness.
+
+    Performs comprehensive deterministic validation tests across all columns to score data quality
+    according to international DAMA-DMBOK data governance benchmarks.
+
+    Args:
+        file_path: Absolute or relative path to CSV, Parquet, JSON, or SQLite database.
+
+    Returns:
+        JSON representation of the DAMA scorecard with per-dimension scores (0-100) and defect counts.
+    """
     try:
         df, source_desc = DatasetLoader.load(file_path)
         evaluator = DataQualityEvaluator(df, source_name=source_desc)

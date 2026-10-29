@@ -1,0 +1,13 @@
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.git
+.github
+.pytest_cache
+.ruff_cache
+.venv
+tests
+assets
+examples
+render_architecture.py
